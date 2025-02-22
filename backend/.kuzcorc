@@ -1,25 +1,28 @@
 {
-    "url": "http://0.0.0.0:7869",
-    "model": "codellama",
-    "requestOptions": {
-      "useMMap": true,
-      "numThread": 6,
-      "numGpu": 1
-    },
-    "database": {
-      "tableName": "documents",
-      "columnName": "match_documents"
-    },
-    "extensions": [
-      ".ts",
-      ".js",
-      ".json",
-      ".jsonc",
-      ".md"
-    ],
-    "exclude": [
-      "dist",
-      ".*node_modules.*"
-    ]
-  }
-  
+  "url": "http://0.0.0.0:7869",
+  "model": "codellama",
+  "requestOptions": {
+    "useMMap": true,
+    "numThread": 6,
+    "numGpu": 1,
+    "format": "json",
+    "temperature": 0.5,
+    "topP": 1,
+    "topK": 40
+  },
+  "database": {
+    "tableName": "documents",
+    "columnName": "match_documents"
+  },
+  "extensions": [
+    ".ts",
+    ".js",
+    ".json",
+    ".jsonc",
+    ".md"
+  ],
+  "exclude": [
+    "dist",
+    ".*node_modules.*"
+  ]
+}
