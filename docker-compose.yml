@@ -1,4 +1,4 @@
-version: '3.8'
+
 
 services:
   server:
@@ -6,7 +6,7 @@ services:
       - .env
     build:
       context: ./
-      dockerfile: .dockerfiles/backend.dockerfile
+      dockerfile: .dockerfiles/backend.Dockerfile
     ports:
       - "3000:3000"  # Fixed port mapping syntax
     volumes:
@@ -18,12 +18,12 @@ services:
       - ollama-docker
 
   ollama:
-    image: ollama/ollama:root/.ollama
+    image: ollama/ollama:latest
     ports:
       - "7869:11434"  # Fixed port mapping syntax
     volumes:
       - ./ollama:/code  # Mount ollama volume
-      - ollama/ollama:/root/.ollama  # Mount ollama/ollama volume
+      - ollama_ollama:/root/.ollama  # Renamed volume to 'ollama_ollama'
     container_name: ollama
     pull_policy: always  # Fixed typo in 'pull_policy'
     tty: true
@@ -56,5 +56,5 @@ networks:
 
 volumes:
   backend:  # Defined backend volume
-  ollama/ollama:  # Defined ollama/ollama volume
+  ollama_ollama:  # Renamed volume to 'ollama_ollama'
   db:  # Defined db volume

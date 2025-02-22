@@ -10,6 +10,9 @@ RUN ["npm", "install", "--legacy-peer-deps"]
 
 COPY backend/src ./src
 
+# Ensure tsconfig.json is also copied
+COPY backend/tsconfig.json ./tsconfig.json
+
 # Build the application
 RUN npm run build
 

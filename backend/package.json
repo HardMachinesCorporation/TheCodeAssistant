@@ -21,13 +21,16 @@
   },
   "dependencies": {
     "@langchain/community": "^0.3.32",
+    "@langchain/core": "^0.3.40",
     "@langchain/ollama": "^0.2.0",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.0",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
+    "@prisma/client": "^6.4.1",
     "cosmiconfig": "^9.0.0",
     "langchain": "^0.3.19",
+    "prisma": "^6.4.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },

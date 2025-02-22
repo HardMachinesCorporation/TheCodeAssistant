@@ -12,7 +12,7 @@ export class OllamaService {
         this.embeddings = new OllamaEmbeddings({
             model: this.configService.get<string>("model"), // "llama2", //default value
             baseUrl: this.configService.get<string>("url"), // http://localhost:11434, // default value
-            requestOptions: this.configService.get<Record<string,string>>("requestOptions")
+            requestOptions: this.configService.get<Record<string, any>>("requestOptions")
        
         })
 
@@ -38,6 +38,9 @@ export class OllamaService {
     }
 
     async sendPrompt(prompt:string){
-        return this.chat.invoke(prompt);
+        return await this.chat.invoke([
+            "system",
+             prompt
+        ]);
     }
 }
