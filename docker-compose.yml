@@ -1,5 +1,6 @@
+version: '3.8'
 
-services: 
+services:
   server:
     env_file:
       - .env
@@ -7,54 +8,53 @@ services:
       context: ./
       dockerfile: .dockerfiles/backend.dockerfile
     ports:
-     - "3000":"3000"
+      - "3000:3000"  # Fixed port mapping syntax
     volumes:
-     - ./backend:/app
-    environement:
-     OLLAMA_URL: "${OLLAMA_URL}"      
-     DB_URL: "${DB_URL}"
-    network:
-      - ollama-docker 
+      - ./backend:/app  # Mount backend volume
+    environment:
+      OLLAMA_URL: "${OLLAMA_URL}"
+      DB_URL: "${DB_URL}"
+    networks:
+      - ollama-docker
 
   ollama:
-    image : ollama/ollama:root/.ollama
-    port :
-     - 7869:11434
-    volumes
-    - .:/code
-    - .:/ollama/ollama:/root/.ollama
+    image: ollama/ollama:root/.ollama
+    ports:
+      - "7869:11434"  # Fixed port mapping syntax
+    volumes:
+      - ./ollama:/code  # Mount ollama volume
+      - ollama/ollama:/root/.ollama  # Mount ollama/ollama volume
     container_name: ollama
-    pull_polycy: always
-    tty:true
+    pull_policy: always  # Fixed typo in 'pull_policy'
+    tty: true
     restart: always
-    environement: 
-      - OLLAMA_KEPP_ALIVE=24h
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
       - OLLAMA_HOST=0.0.0.0
-    network:
-     - ollama-docker
+    networks:
+      - ollama-docker
 
   bd:
-   image: pgvector/pgvector:pg16
-   ports:
-    - 5432:5432
-  volumes:
-   - db:/var/lib/postgresql/data
-   env_file:
-    - .env
-   environement:
-    POSTGRES_USER : "${POSTGRES_USER}"
-    POSTGRES_PASSWORD : "${POSTGRES_PASSWORD}"
-    POSTGRES_DB : "${POSTGRES_DB}"
-    POSTGRES_HOST_AUTH_METHOD : "trust" 
-  networks:
-   - ollama-docker
-   
-  
-  # Service level
-  networks:
-    ollama-docker:
-      external: false
-  volumes:
-    backend:
-      ollama/ollama:
-      db: 
+    image: pgvector/pgvector:pg16
+    ports:
+      - "5432:5432"  # Fixed port mapping syntax
+    volumes:
+      - db:/var/lib/postgresql/data  # Mount db volume
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    networks:
+      - ollama-docker
+
+networks:
+  ollama-docker:
+    external: false
+
+volumes:
+  backend:  # Defined backend volume
+  ollama/ollama:  # Defined ollama/ollama volume
+  db:  # Defined db volume
