@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { END, MemorySaver, START, StateGraph} from '@langchain/langgraph';
 import { OllamaService } from 'src/ollama/ollama.service';
-import { hasSubscribers } from 'diagnostics_channel';
 import {StringOutputParser} from "@langchain/core/output_parsers"
 import { pull } from "langchain/hub";
-import { AnyAaaaRecord } from 'dns';
-
+import { RetriverService } from 'src/rag/retriver/retriver.service';
+import { Utils } from '../utils/utils';
+import type { Document } from "@langchain/core/documents";
 
 interface RAGState {
     question: string;
@@ -22,6 +22,7 @@ export class RagService {
 
     constructor(
         private readonly ollamaService: OllamaService,
+        private readonly retrieverService: RetriverService
     ){
         // Initialize the ragChain asynchronously
         this.initializeRagChain();
@@ -51,5 +52,23 @@ export class RagService {
         this.graph = new StateGraph({
             channels:_graphState
         })
+            .addNode("retrive", this.retrieve)
+            .addNode("generate", this.generate)
+    }
+
+    async retrieve(state:RAGState){
+        const document = await this.retrieverService
+        .getRetriever()
+        .invoke(state.question)
+        return {document}
+    }
+
+    async generate(state:RAGState){
+        const generation = await this.ragChain.invoke({
+            context: Utils.formatDocs(state.document),
+            question:state.question
+        })
+
+        return { generation }
     }
 }
