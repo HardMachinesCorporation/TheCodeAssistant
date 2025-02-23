@@ -1,17 +1,26 @@
 {
-  "name": "hello-world-react-vite",
-  "displayName": "hello-world-react-vite",
+  "name": "hcm-extention",
+  "displayName": "hmc",
   "description": "A hello world sample extension to demonstrate using React + Vite with the Webview UI Toolkit for VS Code.",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.75.0"
+    "vscode": "^1.90.0"
   },
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "hello-world.showHelloWorld",
-        "title": "Hello World (React + Vite): Show"
+        "command": "hmc.showChat",
+        "title": "Hcm: Show"
+      }
+    ],
+    "chatParticipants": [
+      {
+        "id": "hmc.chat",
+         "name": "Helni",
+         "fullName": "Hcm Local AI",
+         "description": "Hcm AI that Splits Code",
+         "isSticky": true
       }
     ]
   },
@@ -36,5 +45,8 @@
     "prettier": "^2.2.1",
     "typescript": "^4.1.3",
     "vscode-test": "^1.5.0"
+  },
+  "dependencies": {
+    "grommet": "^2.45.1"
   }
 }
