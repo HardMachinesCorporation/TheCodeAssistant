@@ -15,7 +15,6 @@ interface RAGState {
    
 }
 
-
 @Injectable()
 export class RagService {
     ragChain:any

@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { OllamaService } from './ollama/ollama.service';
 import { DataProcessingService } from './data-processing/data-processing.service';
 import { DatabaseService } from './database/database.service';
+import { RetriverService } from './rag/retriver/retriver.service';
 import { RagService } from './rag/rag/rag.service';
 import  CustomConfigLoader  from './custom-config/custom-config.service';
 
@@ -16,6 +17,6 @@ import  CustomConfigLoader  from './custom-config/custom-config.service';
     })
   ],
   controllers: [AppController],
-  providers: [AppService, OllamaService, DataProcessingService, DatabaseService, RagService],
+  providers: [AppService, OllamaService, DataProcessingService, DatabaseService, RagService, RetriverService],
 })
 export class AppModule {}
